@@ -50,10 +50,10 @@ namespace TeraDataExtractor
 
         private void VehicleSkills()
         {
-            var xml = XDocument.Load(RootFolder + _region + "/StrSheet_Creature.xml");
+            var xml = XDocument.Load(RootFolder + _region + "/StrSheet_Creature/StrSheet_Creature-0.xml");
             var mobNames = (from hunting in xml.Root.Elements("HuntingZone") let idzone = hunting.Attribute("id").Value from entity in hunting.Elements("String") let template = entity.Attribute("templateId").Value let name = entity.Attribute("name").Value where name != "" && template != "" && idzone != "" select new { idzone, template, name }).ToList();
-            xml = XDocument.Load(RootFolder + _region + "/StrSheet_VehicleSkill.xml");
-            var xml1 = XDocument.Load(RootFolder + _region + "/VehicleSkillIconData.xml");
+            xml = XDocument.Load(RootFolder + _region + "/StrSheet_VehicleSkill/StrSheet_VehicleSkill-0.xml");
+            var xml1 = XDocument.Load(RootFolder + _region + "/VehicleSkillIconData/VehicleSkillIconData-0.xml");
             var petskills = (from sn in xml.Root.Elements("String")
                 let idzone = sn.Attribute("huntingZoneId").Value
                 let template = sn.Attribute("templateId").Value
@@ -134,7 +134,7 @@ namespace TeraDataExtractor
 
         private void chained_skills()
         {
-            var xml = XDocument.Load(RootFolder + _region + "/LobbyShape.xml");
+            var xml = XDocument.Load(RootFolder + _region + "/LobbyShape/LobbyShape-0.xml");
             var templates = (from races in xml.Root.Elements("SelectRace") let race= races.Attribute("race").Value.Cap() let gender= races.Attribute("gender").Value.Cap() from temp in races.Elements("SelectClass") let PClass = ClassConv(temp.Attribute("class").Value) let templateId = temp.Attribute("templateId").Value where temp.Attribute("available").Value== "True" select new {race, gender, PClass ,templateId });
             //assume skills for different races and genders are the same per class 
             templates = templates.Distinct((x, y) => x.PClass == y.PClass, x => x.PClass.GetHashCode()).ToList();

@@ -28,8 +28,8 @@ namespace TeraDataExtractor
 
         public void Battlegrounds()
         {
-            var xml = XDocument.Load(RootFolder + _region + "/BattleFieldData.xml");
-            var xml1 = XDocument.Load(RootFolder + _region + "/StrSheet_BattleField.xml");
+            var xml = XDocument.Load(RootFolder + _region + "/BattleFieldData/BattleFieldData-0.xml");
+            var xml1 = XDocument.Load(RootFolder + _region + "/StrSheet_BattleField/StrSheet_BattleField-0.xml");
             var battleList = (from item in xml.Root.Elements("BattleField")
                 join str in xml1.Root.Elements("String") on item.Attribute("name").Value equals str.Attribute("id").Value
                 let id = item.Attribute("id").Value

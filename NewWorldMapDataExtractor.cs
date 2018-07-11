@@ -24,7 +24,7 @@ namespace TeraDataExtractor
             _region = region;
             Directory.CreateDirectory(OutFolder);
             _worlds = new List<MapElement>();
-            var xdoc = XDocument.Load(Path.Combine(RootFolder, _region, "NewWorldMapData.xml"));
+            var xdoc = XDocument.Load(Path.Combine(RootFolder, _region, "NewWorldMapData/NewWorldMapData-0.xml"));
             xdoc.Descendants().Where(x => x.Name == "World").ToList().ForEach(worldEl =>
             {
                 var wId = Convert.ToUInt32(worldEl.Attribute("id").Value);

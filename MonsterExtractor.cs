@@ -64,10 +64,10 @@ namespace TeraDataExtractor
 
         private void Monsters()
         {
-            var xml = XDocument.Load(RootFolder + _region + "/ContinentData.xml");
+            var xml = XDocument.Load(RootFolder + _region + "/ContinentData/ContinentData-0.xml");
             var contdata = (from cont in xml.Root.Elements("Continent") let battle = (cont.Attribute("channelType")==null)?false:cont.Attribute("channelType").Value== "battleField" let idcont = cont.Attribute("id").Value from hunting in cont.Elements("HuntingZone") let idzone = hunting.Attribute("id").Value where idcont != "" && idzone != "" select new { idcont, idzone, battle}).ToList();
 
-            xml = XDocument.Load(RootFolder + _region + "/LobbyShape.xml");
+            xml = XDocument.Load(RootFolder + _region + "/LobbyShape/LobbyShape-0.xml");
             var templates = (from races in xml.Root.Elements("SelectRace") let race = races.Attribute("race").Value.Cap() let gender = races.Attribute("gender").Value.Cap() from temp in races.Elements("SelectClass") let PClass = SkillExtractor.ClassConv(temp.Attribute("class").Value) let templateId = temp.Attribute("templateId").Value where temp.Attribute("available").Value == "True" select new { race, gender, PClass, templateId });
             //assume skills for different races and genders are the same per class 
             templates = templates.Distinct((x, y) => x.PClass == y.PClass, x => x.PClass.GetHashCode()).ToList();
@@ -96,7 +96,7 @@ namespace TeraDataExtractor
                     where res.id != "" && name != ""
                     select new {idzone="1023", identity=res.id, name}).ToList();
 
-            xml = XDocument.Load(RootFolder + _region + "/StrSheet_Region.xml");
+            xml = XDocument.Load(RootFolder + _region + "/StrSheet_Region/StrSheet_Region-0.xml");
             var regdata = (from str in xml.Root.Elements("String") let idname = str.Attribute("id").Value let regname = str.Attribute("string").Value where idname != "" && regname != "" select new { idname, regname }).ToList();
 
             var contToStr = "".Select(t=> new { idcont = string.Empty, nameid = string.Empty }).ToList();
@@ -134,7 +134,7 @@ namespace TeraDataExtractor
             //        outputFile.WriteLine("{0};{1}", line.Id, line.Name);
             //    }
             //}
-            xml = XDocument.Load(RootFolder + _region + "/StrSheet_Creature.xml");
+            xml = XDocument.Load(RootFolder + _region + "/StrSheet_Creature/StrSheet_Creature-0.xml");
             var mobdata = (from hunting in xml.Root.Elements("HuntingZone")
                            let idzone = hunting.Attribute("id").Value
                            from entity in hunting.Elements("String") join summon in summonNames on new {idzone, identity=entity.Attribute("templateId").Value } equals new {summon.idzone, summon.identity } into results

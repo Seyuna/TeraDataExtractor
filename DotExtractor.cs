@@ -220,7 +220,7 @@ namespace TeraDataExtractor
             List<Skill> skilllist;
             new SkillExtractor(_region, out skilllist);
             if (_region!="KR") skilllist.Where(x=>x.Name.Contains(":")).ToList().ForEach(x=>x.Name=x.Name.Replace(":",""));
-            var xml1 = XDocument.Load(RootFolder + _region + "/LobbyShape.xml");
+            var xml1 = XDocument.Load(RootFolder + _region + "/LobbyShape/LobbyShape-0.xml");
             var templates = (from races in xml1.Root.Elements("SelectRace") let race = races.Attribute("race").Value.Cap() let gender = races.Attribute("gender").Value.Cap() from temp in races.Elements("SelectClass") let PClass = SkillExtractor.ClassConv(temp.Attribute("class").Value) let templateId = temp.Attribute("templateId").Value where temp.Attribute("available").Value == "True" select new { race, gender, PClass, templateId });
             //assume skills for different races and genders are the same per class 
             templates = templates.Distinct((x, y) => x.PClass == y.PClass, x => x.PClass.GetHashCode()).ToList();
@@ -237,8 +237,8 @@ namespace TeraDataExtractor
                 Passives.Add(new { abnormalid = x1.Key, name = x1.Count()>1?SkillExtractor.RemoveLvl(x1.First().name): x1.First().name, iconName = x1.First().iconName });
             }
 
-            xml1 = XDocument.Load(RootFolder + _region + "/StrSheet_Crest.xml");
-            var xml2 = XDocument.Load(RootFolder + _region + "/CrestData.xml");
+            xml1 = XDocument.Load(RootFolder + _region + "/StrSheet_Crest/StrSheet_Crest-0.xml");
+            var xml2 = XDocument.Load(RootFolder + _region + "/CrestData/CrestData-0.xml");
             var Glyphs = (from item in xml1.Root.Elements("String") join crestItem in xml2.Root.Elements("CrestItem") on item.Attribute("id").Value equals crestItem.Attribute("id").Value
                           let passiveid = item.Attribute("id").Value
                           let name = item.Attribute("name").Value
@@ -288,7 +288,7 @@ namespace TeraDataExtractor
                        select new HotDot(int.Parse(dot.abnormalid), dot.type, double.Parse(dot.amount, CultureInfo.InvariantCulture), dot.method, long.Parse(dot.time), int.Parse(dot.tick), gskill==null?iname?.name??iskill.name:gskill.name, iskill==null?"":iskill.nameid, iskill == null ? "" : iskill.name,iname?.tooltip??"",gskill==null?iicon?.iconName??"":gskill.iconName,dot.property, bool.Parse(dot.isBuff), dot.isShow!="False", iicon?.iconName ?? "")).ToList();
 
             var Crests = "".Select(t => new { passiveid = string.Empty, skillname=string.Empty, skillId=string.Empty, iconName = string.Empty, name = string.Empty, glyphIcon=string.Empty,tooltip=string.Empty}).ToList();
-            xml1 = XDocument.Load(RootFolder + _region + "/CrestIconData.xml");
+            xml1 = XDocument.Load(RootFolder + _region + "/CrestIconData/CrestIconData-0.xml");
             foreach (
                 var file in
                     Directory.EnumerateFiles(RootFolder + _region + "/Passivity/"))

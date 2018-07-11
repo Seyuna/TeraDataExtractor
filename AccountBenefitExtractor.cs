@@ -24,7 +24,7 @@ namespace TeraDataExtractor
             _region = region;
             Directory.CreateDirectory(OutFolder);
             _benefits = new Dictionary<uint, string>();
-            var xdoc = XDocument.Load(Path.Combine(RootFolder,_region, "StrSheet_AccountBenefit.xml"));
+            var xdoc = XDocument.Load(Path.Combine(RootFolder,_region, "StrSheet_AccountBenefit/StrSheet_AccountBenefit-0.xml"));
             xdoc.Descendants().Where(x => x.Name == "String").ToList().ForEach(s =>
             {
                 _benefits.Add(Convert.ToUInt32(s.Attribute("id").Value),

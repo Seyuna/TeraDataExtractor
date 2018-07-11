@@ -20,7 +20,7 @@ namespace TeraDataExtractor
         {
             _region = region;
             Directory.CreateDirectory(OutFolder);
-            File.Copy(Path.Combine(RootFolder,_region, "EquipmentExpData.xml"),
+            File.Copy(Path.Combine(RootFolder,_region, "EquipmentExpData/EquipmentExpData-0.xml"),
                         Path.Combine(OutFolder, $"equip_exp-{_region}.xml"), true);
         }
     }

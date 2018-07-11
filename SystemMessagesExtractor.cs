@@ -22,7 +22,7 @@ namespace TeraDataExtractor
         {
             Directory.CreateDirectory(OutFolder);
             var lines = new List<string>();
-            XDocument.Load(Path.Combine(RootFolder, region, "StrSheet_SystemMessage.xml")).
+            XDocument.Load(Path.Combine(RootFolder, region, "StrSheet_SystemMessage/StrSheet_SystemMessage-0.xml")).
             Descendants().Where(x => x.Name == "String").ToList().ForEach(str =>
             {
                 if (str.Attribute("string") == null) return;

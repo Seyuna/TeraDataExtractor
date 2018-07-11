@@ -22,7 +22,7 @@ namespace TeraDataExtractor
         {
             _region = region;
             Directory.CreateDirectory(OutFolder);
-            var xdoc = XDocument.Load(Path.Combine(RootFolder, _region, "StrSheet_AchievementGradeInfo.xml"));
+            var xdoc = XDocument.Load(Path.Combine(RootFolder, _region, "StrSheet_AchievementGradeInfo/StrSheet_AchievementGradeInfo-0.xml"));
 
             var lines = new List<string>();
             foreach (var item in xdoc.Descendants().Where(x => x.Name == "String"))
